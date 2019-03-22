@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1 
+kind: Deployment 
+metadata:
+  name: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+     app: mysql
+  template:
+    metadata:
+      labels:
+         app: mysql
+         zone: testapp
+    spec:
+      containers:
+      - name: mysql
+        image: hub.docker.zwq.io:5000/mysql:5.7
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: "123456"
+        resources:
+         requests:
+          memory: "128Mi"
+          cpu: "150m"
+         limits:
+          memory: "248Mi"
+          cpu: "500m"

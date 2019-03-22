@@ -1,0 +1,35 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+ name: myweb
+spec:
+ replicas: 1
+ selector:
+  matchLabels:
+    app: myweb
+ template:
+  metadata:
+    labels:
+       app: myweb
+  spec:
+   affinity:
+     podAffinity:
+       requiredDuringSchedulingIgnoredDuringExecution:
+       - labelSelector:
+          matchExpressions:
+          - key: security
+            operator: In
+            values: 
+            - S1
+         topologyKey: kubernetes.io/hostname
+   containers:
+    - name: myweb
+      image: hub.docker.zwq.io:5000/tomcat-app:v1 
+      imagePullPolicy: Always
+      ports:
+      - containerPort: 8080
+      env:
+      - name: MYSQL_SERVICE_HOST
+        value: 'mysql1'
+      - name: MYSQL_SERVICE_PORT
+        value: '3306'

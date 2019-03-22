@@ -1,0 +1,33 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+ name: redis-master
+spec:
+ replicas: 1
+ selector:
+  matchLabels:
+    app: redis-master
+  matchExpressions:
+    - {key: app, operator: In, values: [redis-master]}
+#pod相关的定义：
+ template:        
+   metadata:
+     labels:
+       app: redis-master
+   spec:
+     affinity:
+       nodeAffinity:
+         requiredDuringSchedulingIgnoredDuringExecution:
+           nodeSelectorTerms:
+           - matchExpressions:
+             - key: zone
+               operator: In
+               values:
+               - test
+#容器相关的定义
+     containers:
+       - name: master
+         image: hub.docker.zwq.io:5000/redis-master
+         imagePullPolicy: Always
+         ports:
+         - containerPort: 6379

@@ -1,0 +1,1 @@
+kubeadm join 192.168.89.32:6443 --token ayywzu.i8j66xnnwpsnp6yj --discovery-token-ca-cert-hash sha256:9f8b1df7ea6d29298aa5ad4d1f64ed53057db4321850d515be3a9677903bce49
