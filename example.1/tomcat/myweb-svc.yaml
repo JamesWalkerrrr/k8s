@@ -3,9 +3,9 @@ kind: Service
 metadata:
   name: myweb
 spec:
-  type: NodePort
+  type: ClusterIP
   ports: 
    - port: 8080 
-     nodePort: 30001
+     targetPort: 8080
   selector:
     app: myweb
